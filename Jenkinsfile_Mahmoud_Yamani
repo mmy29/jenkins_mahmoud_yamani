@@ -32,10 +32,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                    ${VIRTUAL_ENV}\\Scripts\\activate && 
-                    coverage run --source=app -m pytest &&
-                    coverage report &&
-                    coverage html
+                    ${VIRTUAL_ENV}\\Scripts\\activate && coverage run --source=app -m pytest && coverage report && coverage html
                     """
                 }
             }
