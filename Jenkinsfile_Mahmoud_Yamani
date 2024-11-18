@@ -28,6 +28,18 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                script {
+                    bat """
+                    ${VIRTUAL_ENV}\\Scripts\\activate && 
+                    coverage run --source=app -m pytest &&
+                    coverage report &&
+                    coverage html
+                    """
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
