@@ -31,22 +31,22 @@ pipeline {
         stage('Coverage') {
             steps {
                 script {
-                try {
                     bat """
                     ${VIRTUAL_ENV}\\Scripts\\activate && coverage run --source=app -m pytest && coverage report && coverage html
                     """
-                } catch (Exception e) {
-                    echo "Bandit found issues, but the pipeline will continue."
-                }
                 }
             }
         }
         stage('Security Scan') {
             steps {
                 script {
-                    bat """
-                    call ${VIRTUAL_ENV}\\Scripts\\activate && bandit -r . --severity-level high --exclude venv,__pycache__,tests/test_app.py -f json -o bandit_report.json
-                    """
+                    try{
+                        bat """
+                        call ${VIRTUAL_ENV}\\Scripts\\activate && bandit -r . --severity-level high --exclude venv,__pycache__,tests/test_app.py -f json -o bandit_report.json 
+                        """
+                    } catch (Exception e) {
+                        echo "Bandit found issues, but the pipeline will continue."
+                    }
                 }
             }
         }
