@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                    bandit -r . --exclude venv,__pycache__ -f json -o bandit_report.json -v
+                    ${VIRTUAL_ENV}\\Scripts\\activate && bandit -r . --exclude venv,__pycache__ -f json -o bandit_report.json -v
                     """
                 }
             }
